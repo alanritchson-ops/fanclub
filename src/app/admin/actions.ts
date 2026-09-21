@@ -10,9 +10,7 @@ import {
   SESSION_MAX_AGE,
   createSessionToken,
 } from "@/lib/admin/session";
-import { btcpayConfigured } from "@/lib/btcpay";
 import { sendReply } from "@/lib/mail";
-import { syncInvoice } from "@/lib/payments";
 import { addReply, getMessage, setStatus, STATUSES, type MessageStatus } from "@/lib/messages";
 
 export type FormState = { error?: string; ok?: boolean };
@@ -107,17 +105,4 @@ export async function statusAction(formData: FormData) {
   await setStatus(id, status);
   revalidatePath("/admin");
   revalidatePath(`/admin/messages/${id}`);
-}
-
-/** Ask BTCPay for the invoice's current state, e.g. if a webhook was missed. */
-export async function recheckPaymentAction(formData: FormData) {
-  await requireAdmin();
-  const invoiceId = String(formData.get("invoiceId") ?? "");
-  if (!invoiceId || !btcpayConfigured()) return;
-  try {
-    await syncInvoice(invoiceId);
-  } catch (err) {
-    console.error("[admin] payment re-check failed", err);
-  }
-  revalidatePath("/admin/payments");
 }

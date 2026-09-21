@@ -58,15 +58,9 @@ The admin panel at `/admin` lists them and lets the admin reply; replies are ema
 
 Fans who reply to an admin reply land in the `hello@` inbox (Reply-To), so the conversation continues there.
 
-## VIP payments (Bitcoin via BTCPay Server)
+## VIP membership requests
 
-VIP is a one-time, lifetime purchase. The join form creates a BTCPay invoice and sends the fan to BTCPay's
-hosted checkout; payment confirmation arrives by webhook, which issues the numbered pass and emails it.
-The price lives in `site.membership` in `src/lib/site.ts` (USD, paid in BTC at the live rate).
-
-1. In BTCPay, create a store with an on-chain Bitcoin wallet (and no other payment methods).
-2. Create an API key with `btcpay.store.cancreateinvoice` and `btcpay.store.canviewinvoices`.
-3. Store > Settings > Webhooks > Create: URL `https://<your domain>/api/btcpay/webhook`, a secret of your
-   choosing, and the invoice settled / processing / expired / invalid events.
-4. Fill in the `BTCPAY_*` values in `.env.local` (see `.env.example`).
-5. Payments appear in `/admin/payments`. A missed webhook can be fixed with "Re-check with BTCPay".
+The join form doesn't take payment. It sends a request through the same pipeline as the contact form: the
+request is saved, emailed to the club inbox, and acknowledged to the fan. The admin sees it in `/admin` under
+the "VIP membership request" topic and replies with payment options. The price shown on the site is
+`site.membership.price` in `src/lib/site.ts`.

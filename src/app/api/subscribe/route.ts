@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { mailConfigured, sendAcknowledgement, sendContactNotification } from "@/lib/mail";
 import { createMessage, TOPICS } from "@/lib/messages";
-import { btcpayConfigured } from "@/lib/btcpay";
 import { mongoConfigured } from "@/lib/mongo";
-import { AlreadyMemberError, createCheckout } from "@/lib/payments";
-import { site } from "@/lib/site";
+import { VIP_TOPIC } from "@/lib/mail-templates";
+import { site, vipPriceLabel } from "@/lib/site";
 
 /**
  * Form endpoint for membership sign-ups, newsletter and contact messages.
@@ -12,8 +11,9 @@ import { site } from "@/lib/site";
  * Contact messages are saved to MongoDB (for the admin panel) and emailed to
  * the club inbox through Resend.
  *
- * Join creates a BTCPay Server invoice for the lifetime VIP pass and returns
- * its checkout link; the webhook confirms payment.
+ * A VIP join is a request: it goes through the same pipeline as a contact
+ * message (saved, emailed to the club, acknowledged to the fan) and the admin
+ * follows up with payment options.
  *
  * TODO: connect a real provider for the newsletter (Mailchimp/Buttondown).
  * That form still just validates and logs.
@@ -100,7 +100,20 @@ export async function POST(req: Request) {
         { status: 429 },
       );
     }
-    return handleJoin(body, email);
+    const country = clean(body.country, 60);
+    return handleContact(
+      {
+        name: body.name,
+        topic: VIP_TOPIC,
+        message: [
+          `VIP membership request (lifetime, ${vipPriceLabel}).`,
+          `Country: ${country || "not given"}`,
+          "",
+          "Please send the payment options.",
+        ].join("\n"),
+      },
+      email,
+    );
   }
 
   console.log("[fanclub form]", {
@@ -166,34 +179,4 @@ async function handleContact(body: Record<string, unknown>, email: string) {
     );
   }
   return NextResponse.json({ ok: true });
-}
-
-async function handleJoin(body: Record<string, unknown>, email: string) {
-  if (!mongoConfigured() || !btcpayConfigured()) {
-    console.error("[fanclub join] MONGODB_URI or BTCPAY_* is not configured");
-    return NextResponse.json(
-      { error: "Membership sign-up isn't available right now. Please try again soon." },
-      { status: 503 },
-    );
-  }
-  try {
-    const { checkoutUrl } = await createCheckout({
-      name: clean(body.name, 60),
-      email,
-      country: clean(body.country, 60) || undefined,
-    });
-    return NextResponse.json({ ok: true, checkoutUrl });
-  } catch (err) {
-    if (err instanceof AlreadyMemberError) {
-      return NextResponse.json(
-        { error: "That email already has a VIP pass. Check your inbox for the welcome email." },
-        { status: 409 },
-      );
-    }
-    console.error("[fanclub join] could not start checkout", err);
-    return NextResponse.json(
-      { error: "We couldn't start your payment. Please try again shortly." },
-      { status: 502 },
-    );
-  }
 }

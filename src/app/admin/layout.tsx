@@ -21,16 +21,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             {site.clubName} <span className="text-bone/55">Admin</span>
           </Link>
           {admin && (
-            <nav aria-label="Admin" className="flex items-center gap-5 text-sm font-medium">
-              <Link href="/admin" className="text-bone/80 hover:text-white">
-                Messages
-              </Link>
-              <Link href="/admin/payments" className="text-bone/80 hover:text-white">
-                Payments
-              </Link>
-            </nav>
-          )}
-          {admin && (
             <div className="flex items-center gap-4 text-sm">
               <span className="hidden text-bone/60 sm:inline">{admin}</span>
               <form action={logoutAction}>

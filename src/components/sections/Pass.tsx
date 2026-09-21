@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { passPerks } from "@/lib/content";
-import { otherPaymentHref, vipPriceLabel } from "@/lib/site";
+import { vipPriceLabel } from "@/lib/site";
 import { LinkButton } from "@/components/ui/Button";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { CheckIcon } from "@/components/ui/icons";
@@ -45,12 +45,8 @@ export function Pass() {
             <p className="mt-6 max-w-[48ch] text-lg text-bone/80">
               One card, issued the day you join. It&apos;s your badge in the
               community and your proof of entry at member events. Every benefit
-              comes with it. One payment of {vipPriceLabel} for lifetime VIP, paid in
-              Bitcoin. Prefer another way to pay?{" "}
-              <a href={otherPaymentHref} className="underline underline-offset-4 hover:text-white">
-                Email us
-              </a>{" "}
-              for other options.
+              comes with it. One payment of {vipPriceLabel} for lifetime VIP. Send a
+              request and the team will email you the payment options.
             </p>
             <ul className="mt-8 space-y-3">
               {passPerks.map((p) => (
@@ -63,7 +59,7 @@ export function Pass() {
               ))}
             </ul>
             <LinkButton href="/join" variant="light" className="mt-9">
-              Join the club
+              Request VIP access
             </LinkButton>
           </div>
         </div>

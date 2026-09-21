@@ -1,6 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
-import { acknowledgementEmail, replyEmail, welcomeEmail } from "@/lib/mail-templates";
+import { acknowledgementEmail, replyEmail } from "@/lib/mail-templates";
 import { site } from "@/lib/site";
 
 const FROM = () =>
@@ -76,11 +76,4 @@ export async function sendReply(m: {
 }) {
   const mail = replyEmail(brand(), m);
   return send({ from: FROM(), to: m.to, replyTo: INBOX(), ...mail });
-}
-
-/** VIP welcome with the numbered pass, sent when the payment settles. */
-export async function sendWelcome(m: { name: string; email: string; memberNumber: number }) {
-  if (!mailConfigured()) return;
-  const mail = welcomeEmail(brand(), m);
-  return send({ from: FROM(), to: m.email, replyTo: INBOX(), ...mail });
 }

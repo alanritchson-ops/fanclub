@@ -1,5 +1,6 @@
 import "server-only";
 import { ObjectId, type WithId } from "mongodb";
+import { VIP_TOPIC } from "@/lib/mail-templates";
 import { getDb } from "@/lib/mongo";
 
 export const TOPICS = [
@@ -7,6 +8,7 @@ export const TOPICS = [
   "Press and partnerships",
   "Report an impersonator",
   "Something else",
+  VIP_TOPIC,
 ] as const;
 
 export type MessageStatus = "new" | "read" | "replied" | "archived";

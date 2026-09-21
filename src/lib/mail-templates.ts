@@ -51,7 +51,7 @@ function layout(brand: Brand, preheader: string, inner: string) {
       </td></tr>
       <tr><td style="padding:8px 32px 32px;">
         <div style="border-top:1px solid ${C.paper};padding-top:20px;font:13px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.muted};">
-          We will never message you first asking for money, gift cards or a private meet-up. Only pay on our website, or through an option you asked us about yourself. If someone contacts you first, it isn&rsquo;t us.
+          We will never message you first asking for money, gift cards or a private meet-up. Payment details only ever come from our team in reply to a request you sent. If someone contacts you first, it isn&rsquo;t us.
           <br><br>
           <a href="${escapeHtml(brand.url)}" style="color:${C.crimson};text-decoration:underline;">${escapeHtml(site)}</a>
         </div>
@@ -69,6 +69,8 @@ const quote = (label: string, text: string) => `
   ${paragraphs(text, `font-size:15px;color:${C.ink};`)}
 </div>`;
 
+export const VIP_TOPIC = "VIP membership request";
+
 const firstName = (name: string) => name.trim().split(/\s+/)[0] || "there";
 
 /** Sent to the visitor right after they submit the contact form. */
@@ -77,22 +79,30 @@ export function acknowledgementEmail(
   m: { name: string; topic: string; message: string },
 ) {
   const first = firstName(m.name);
-  const subject = `We got your message, ${first}`;
+  const vip = m.topic === VIP_TOPIC;
+  const subject = vip ? `We got your VIP request, ${first}` : `We got your message, ${first}`;
   const html = layout(
     brand,
     `Thanks for writing. We've received your message about ${m.topic.toLowerCase()}.`,
-    `<h1 style="margin:0 0 20px;font:800 26px/1.15 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:-.02em;">Thanks for writing, ${escapeHtml(first)}.</h1>
-     <p style="margin:0 0 16px;">Your message has reached the ${escapeHtml(brand.clubName)} team. Every message is read by a person, and we&rsquo;ll reply to you by email, usually within two business days.</p>
-     <p style="margin:0 0 16px;">You don&rsquo;t need to send it again. For reference, here&rsquo;s what you told us about <strong>${escapeHtml(m.topic.toLowerCase())}</strong>:</p>
-     ${quote("Your message", m.message)}
+    `<h1 style="margin:0 0 20px;font:800 26px/1.15 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:-.02em;">${vip ? "Thanks for your interest" : "Thanks for writing"}, ${escapeHtml(first)}.</h1>
+     ${
+       vip
+         ? `<p style="margin:0 0 16px;">We&rsquo;ve received your request to join the VIP club. A member of the ${escapeHtml(brand.clubName)} team will email you personally, usually within two business days, with the payment options and next steps. Your numbered pass is issued once payment is confirmed.</p>
+     <p style="margin:0 0 16px;">There&rsquo;s nothing else you need to do. Here&rsquo;s the request we received:</p>`
+         : `<p style="margin:0 0 16px;">Your message has reached the ${escapeHtml(brand.clubName)} team. Every message is read by a person, and we&rsquo;ll reply to you by email, usually within two business days.</p>
+     <p style="margin:0 0 16px;">You don&rsquo;t need to send it again. For reference, here&rsquo;s what you told us about <strong>${escapeHtml(m.topic.toLowerCase())}</strong>:</p>`
+     }
+     ${quote(vip ? "Your request" : "Your message", m.message)}
      <p style="margin:24px 0 0;">With thanks,<br><strong>The ${escapeHtml(brand.clubName)} team</strong></p>`,
   );
   const text = [
-    `Thanks for writing, ${first}.`,
+    vip ? `Thanks for your interest, ${first}.` : `Thanks for writing, ${first}.`,
     "",
-    `Your message has reached the ${brand.clubName} team. Every message is read by a person, and we'll reply by email, usually within two business days.`,
+    vip
+      ? `We've received your request to join the VIP club. A member of the ${brand.clubName} team will email you personally, usually within two business days, with the payment options and next steps. Your numbered pass is issued once payment is confirmed.`
+      : `Your message has reached the ${brand.clubName} team. Every message is read by a person, and we'll reply by email, usually within two business days.`,
     "",
-    `Your message about ${m.topic.toLowerCase()}:`,
+    vip ? "Your request:" : `Your message about ${m.topic.toLowerCase()}:`,
     ...m.message.split("\n").map((l) => `> ${l}`),
     "",
     "With thanks,",
@@ -130,46 +140,6 @@ export function replyEmail(
     "You wrote:",
     ...m.original.split("\n").map((l) => `> ${l}`),
     "",
-    brand.url,
-  ].join("\n");
-  return { subject, html, text };
-}
-
-export const passNumber = (n: number) => String(n).padStart(6, "0");
-
-/** Sent once the Bitcoin payment settles and the pass is issued. */
-export function welcomeEmail(brand: Brand, m: { name: string; memberNumber: number }) {
-  const first = firstName(m.name);
-  const no = passNumber(m.memberNumber);
-  const subject = `Welcome to the VIP club, ${first}`;
-  const html = layout(
-    brand,
-    `Your payment is confirmed. Your VIP pass is No. ${no}.`,
-    `<h1 style="margin:0 0 20px;font:800 26px/1.15 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:-.02em;">Welcome in, ${escapeHtml(first)}.</h1>
-     <p style="margin:0 0 20px;">Your Bitcoin payment is confirmed and your lifetime VIP membership is active.</p>
-     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 24px;background:${C.ink};background-image:linear-gradient(135deg,#5a0d12,#120607);border-radius:16px;">
-       <tr><td style="padding:24px;">
-         <div style="font:700 12px/1 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:${C.brass};">VIP Gold &middot; Lifetime</div>
-         <div style="margin-top:18px;font:800 26px/1.1 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:#ffffff;">${escapeHtml(m.name)}</div>
-         <div style="margin-top:10px;font:600 15px/1 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.paper};">Pass No. ${no}</div>
-       </td></tr>
-     </table>
-     <p style="margin:0 0 16px;">Your pass covers the private community, member pricing, watch-alongs and every VIP drop. It doesn&rsquo;t expire and there&rsquo;s nothing to renew.</p>
-     <p style="margin:0 0 16px;">If you have any questions, just reply to this email.</p>
-     <p style="margin:24px 0 0;">With thanks,<br><strong>The ${escapeHtml(brand.clubName)} team</strong></p>`,
-  );
-  const text = [
-    `Welcome in, ${first}.`,
-    "",
-    "Your Bitcoin payment is confirmed and your lifetime VIP membership is active.",
-    `Pass No. ${no}`,
-    "",
-    "Your pass covers the private community, member pricing, watch-alongs and every VIP drop. It doesn't expire and there's nothing to renew.",
-    "",
-    "Questions? Just reply to this email.",
-    "",
-    "With thanks,",
-    `The ${brand.clubName} team`,
     brand.url,
   ].join("\n");
   return { subject, html, text };

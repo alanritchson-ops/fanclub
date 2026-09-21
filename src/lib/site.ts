@@ -25,9 +25,8 @@ export const site = {
   // Alan was born on 28 November 1982
   birthday: { year: 1982, monthIndex: 10, day: 28 },
 
-  // Lifetime VIP price, charged in USD and paid in Bitcoin at the live rate
-  // through BTCPay Server. Fans who'd rather pay another way email the club.
-  membership: { price: "1500", currency: "$", currencyCode: "USD" },
+  // Lifetime VIP price. Fans send a request and the team emails payment options.
+  membership: { price: "1500", currency: "$" },
 
   imdb: "https://www.imdb.com/name/nm2024927/",
 } as const;
@@ -53,10 +52,3 @@ export const nav: NavItem[] = [
 
 /** "$1,500" */
 export const vipPriceLabel = `${site.membership.currency}${Number(site.membership.price).toLocaleString("en-US")}`;
-
-/** Opens an email to the club asking about other ways to pay for VIP. */
-export const otherPaymentHref = `mailto:${site.emails.support}?subject=${encodeURIComponent(
-  "VIP payment options",
-)}&body=${encodeURIComponent(
-  "Hi, I'd like to join the VIP club but I'd prefer not to pay in Bitcoin. What other payment options are available?\n\nName:\nCountry:\n",
-)}`;

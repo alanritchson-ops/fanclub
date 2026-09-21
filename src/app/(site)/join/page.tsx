@@ -17,7 +17,7 @@ export default function JoinPage() {
         </SectionTitle>
         <p className="mt-6 max-w-[50ch] text-lg text-bone/80">
           First word on news roundups, watch-alongs and member drops. Your
-          pass is numbered and emailed as soon as your Bitcoin payment confirms.
+          pass is numbered and issued once your payment is confirmed.
         </p>
         <div className="mt-14">
           <JoinForm />

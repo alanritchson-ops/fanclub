@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { otherPaymentHref, vipPriceLabel } from "@/lib/site";
+import { vipPriceLabel } from "@/lib/site";
 import { passPerks } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { CheckIcon } from "@/components/ui/icons";
@@ -15,20 +15,27 @@ export function JoinForm() {
   const [country, setCountry] = useState("");
   const [agree, setAgree] = useState(false);
   const { status, submit } = useSubmit("join");
+  const done = status.state === "done";
 
   return (
     <div className="grid gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
       <div>
+        {done ? (
+          <div role="status" className="rounded-3xl border border-brass/50 bg-black/25 p-7">
+            <h2 className="display text-4xl">Request received, {name.split(" ")[0]}.</h2>
+            <p className="mt-4 max-w-[46ch] text-lg text-bone/80">
+              We&apos;ve emailed a confirmation to {email}. A member of the team will follow up
+              personally with the payment options and your next steps. Check your spam folder if
+              nothing arrives within a day.
+            </p>
+          </div>
+        ) : (
         <form
             className="relative space-y-5"
             onSubmit={async (e) => {
               e.preventDefault();
               const company = (new FormData(e.currentTarget).get("company") as string) || "";
-              const res = await submit({ name, email, country, agree, company });
-              // Hand off to BTCPay's hosted checkout to pay in Bitcoin
-              if (res && typeof res.checkoutUrl === "string") {
-                window.location.assign(res.checkoutUrl);
-              }
+              await submit({ name, email, country, agree, company });
             }}
           >
             <Honeypot />
@@ -81,24 +88,18 @@ export function JoinForm() {
                 network, and I agree to the fan club terms.
               </span>
             </label>
-            <Button type="submit" variant="light" disabled={status.state === "sending" || status.state === "done"} className="w-full sm:w-auto">
-              {status.state === "sending" || status.state === "done"
-                ? "Opening checkout..."
-                : `Pay ${vipPriceLabel} in Bitcoin`}
+            <Button type="submit" variant="light" disabled={status.state === "sending"} className="w-full sm:w-auto">
+              {status.state === "sending"
+                ? "Sending..."
+                : `Request VIP access (${vipPriceLabel} lifetime)`}
             </Button>
             <p className="text-sm text-bone/65">
-              One payment, lifetime VIP. You&apos;ll be taken to a secure Bitcoin checkout, and your
-              numbered pass is emailed as soon as the payment confirms.
-            </p>
-            <p className="text-sm text-bone/65">
-              Don&apos;t want to pay in Bitcoin?{" "}
-              <a href={otherPaymentHref} className="font-semibold text-bone underline underline-offset-4">
-                Email us for another payment option
-              </a>
-              .
+              One payment, lifetime VIP. Send your request and the team will email you the payment
+              options. Your numbered pass is issued once payment is confirmed.
             </p>
             <FormMessage status={status} success="" />
         </form>
+        )}
 
         <ul className="mt-10 space-y-3 border-t border-white/15 pt-8">
           {passPerks.map((p) => (
