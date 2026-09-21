@@ -51,7 +51,7 @@ function layout(brand: Brand, preheader: string, inner: string) {
       </td></tr>
       <tr><td style="padding:8px 32px 32px;">
         <div style="border-top:1px solid ${C.paper};padding-top:20px;font:13px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.muted};">
-          We will never ask you for money, gift cards or a private meet-up by email or social media. If someone does, it isn&rsquo;t us.
+          We will never message you first asking for money, gift cards or a private meet-up. Only pay on our website, or through an option you asked us about yourself. If someone contacts you first, it isn&rsquo;t us.
           <br><br>
           <a href="${escapeHtml(brand.url)}" style="color:${C.crimson};text-decoration:underline;">${escapeHtml(site)}</a>
         </div>

@@ -259,7 +259,7 @@ export const safety = {
   title: "Looking out for fans.",
   paragraphs: [
     "Celebrity impersonation scams are common, and they target fans. If someone claiming to be Alan, his team or this club asks you for money, gift cards, crypto or a private meet-up, it isn't real.",
-    "The club team will never message you first asking for payment. Every payment happens on this website, and nowhere else.",
+    "The club team will never message you first asking for payment. You pay on this website, or through another option you asked us about by emailing hello@alanritchsonfanclub.com. Never pay anyone who contacted you first.",
   ],
   rules: [
     "Be kind. Disagree with ideas, not people.",
@@ -279,6 +279,10 @@ export const faqs: Faq[] = [
   {
     q: "How do I pay, and is it a subscription?",
     a: "VIP is a single payment for lifetime access, so there's nothing to renew or cancel. You pay in Bitcoin through a secure checkout, and your numbered pass is emailed as soon as the payment confirms.",
+  },
+  {
+    q: "Can I pay another way?",
+    a: "Yes. If you'd rather not pay in Bitcoin, email hello@alanritchsonfanclub.com and the team will reply with the other options available. We'll only ever ask for payment from that address or this website.",
   },
   {
     q: "How does the digital pass work?",

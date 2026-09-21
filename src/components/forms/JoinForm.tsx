@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { site } from "@/lib/site";
+import { otherPaymentHref, vipPriceLabel } from "@/lib/site";
 import { passPerks } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { CheckIcon } from "@/components/ui/icons";
@@ -84,11 +84,18 @@ export function JoinForm() {
             <Button type="submit" variant="light" disabled={status.state === "sending" || status.state === "done"} className="w-full sm:w-auto">
               {status.state === "sending" || status.state === "done"
                 ? "Opening checkout..."
-                : `Pay ${site.membership.currency}${site.membership.price} in Bitcoin`}
+                : `Pay ${vipPriceLabel} in Bitcoin`}
             </Button>
             <p className="text-sm text-bone/65">
               One payment, lifetime VIP. You&apos;ll be taken to a secure Bitcoin checkout, and your
               numbered pass is emailed as soon as the payment confirms.
+            </p>
+            <p className="text-sm text-bone/65">
+              Don&apos;t want to pay in Bitcoin?{" "}
+              <a href={otherPaymentHref} className="font-semibold text-bone underline underline-offset-4">
+                Email us for another payment option
+              </a>
+              .
             </p>
             <FormMessage status={status} success="" />
         </form>
