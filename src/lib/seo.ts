@@ -21,8 +21,10 @@ export const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": `${site.url}/#website`,
-  url: site.url,
+  url: `${site.url}/`,
   name: site.clubName,
+  // Helps Google show the club name (not just the domain) as the site name in results
+  alternateName: ["Alan Ritchson Fan Club", site.domain],
   description: site.description,
   inLanguage: "en",
   publisher: { "@id": `${site.url}/#organization` },
