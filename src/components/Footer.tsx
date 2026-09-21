@@ -58,12 +58,7 @@ export function Footer() {
         <p className="mt-14 rounded-2xl border border-white/15 bg-white/[.04] p-5 text-sm leading-relaxed text-bone/75">
           <strong className="font-semibold text-bone">Heads up:</strong> this is
           the official Alan Ritchson fan club. It is not affiliated with Amazon,
-          Netflix or any studio. We will never ask you for money over social media or to meet up
-          outside a club event. If an account claims otherwise, report it to{" "}
-          <a className="underline underline-offset-2" href={`mailto:${site.emails.report}`}>
-            {site.emails.report}
-          </a>
-          .
+          Netflix or any studio.
         </p>
 
         <div className="mt-8 flex flex-col gap-2 text-sm text-bone/55 md:flex-row md:justify-between">
