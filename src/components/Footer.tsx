@@ -22,6 +22,8 @@ export function Footer() {
           <nav aria-label="Explore">
             <h2 className="text-bone/55">Explore</h2>
             <ul className="mt-4 space-y-3">
+              <li><Link href="/biography" className="hover:underline">Biography</Link></li>
+              <li><Link href="/filmography" className="hover:underline">Filmography</Link></li>
               <li><Link href="/#store" className="hover:underline">Store</Link></li>
               <li><Link href="/#benefits" className="hover:underline">VIP benefits</Link></li>
               <li><Link href="/join" className="hover:underline">Membership</Link></li>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { roots, timeline } from "@/lib/content";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 
@@ -26,6 +27,12 @@ export function Roots() {
                 </div>
               ))}
             </dl>
+            <Link
+              href="/biography"
+              className="mt-8 inline-block font-semibold text-signal underline decoration-2 underline-offset-4 hover:text-white"
+            >
+              Read Alan Ritchson&apos;s full biography
+            </Link>
           </div>
         </div>
 

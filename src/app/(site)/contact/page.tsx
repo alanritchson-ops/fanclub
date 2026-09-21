@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { JsonLd } from "@/components/JsonLd";
+import { abs, breadcrumbLd } from "@/lib/seo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Fan support, press enquiries and impersonation reports for the official Alan Ritchson fan club.",
+    "Contact the official Alan Ritchson fan club for fan support, press and partnership enquiries, or to report an impersonator.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
     <section className="bg-gradient-to-b from-oxblood via-wine to-ink text-bone">
+      <JsonLd
+        data={[
+          { "@context": "https://schema.org", "@type": "ContactPage", name: "Contact the fan club", url: abs("/contact") },
+          breadcrumbLd([{ name: "Contact", path: "/contact" }]),
+        ]}
+      />
       <div className="mx-auto grid max-w-[1400px] gap-14 px-5 pb-24 pt-32 md:px-10 md:pb-32 md:pt-40 lg:grid-cols-[1fr_1.1fr] lg:gap-20 xl:px-20">
         <div>
           <SectionTitle as="h1">Get in touch.</SectionTitle>

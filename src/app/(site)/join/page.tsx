@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import { JoinForm } from "@/components/forms/JoinForm";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbLd } from "@/lib/seo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 
 export const metadata: Metadata = {
-  title: "Join the VIP club",
+  title: "Join the VIP Club",
   description:
-    "Become a VIP member of the official Alan Ritchson fan club and get your numbered digital pass.",
+    "Request lifetime VIP access to the official Alan Ritchson fan club: a numbered pass, private community, member pricing and first notice on drops.",
+  alternates: { canonical: "/join" },
 };
 
 export default function JoinPage() {
   return (
     <section className="bg-gradient-to-b from-oxblood via-wine to-ink text-bone">
+      <JsonLd data={breadcrumbLd([{ name: "Join the VIP Club", path: "/join" }])} />
       <div className="mx-auto max-w-[1400px] px-5 pb-24 pt-32 md:px-10 md:pb-32 md:pt-40 xl:px-20">
         <SectionTitle as="h1" className="max-w-[12ch]">
           Join the club.

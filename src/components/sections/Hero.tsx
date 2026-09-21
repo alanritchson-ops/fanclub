@@ -28,7 +28,7 @@ export function Hero() {
         <>
           <Image
             src={photo}
-            alt="Alan Ritchson"
+            alt="Alan Ritchson, star of Reacher"
             fill
             priority
             sizes="100vw"
@@ -92,6 +92,7 @@ export function Hero() {
           id="hero-title"
           className="display uppercase text-[17vw] md:text-[10vw] lg:text-[length:min(7vw,8rem)]"
         >
+          <span className="sr-only">Alan Ritchson Fan Club: </span>
           <span className="rise block" style={{ "--i": 0 } as React.CSSProperties}>
             <span className="block md:inline">Where</span>{" "}
             <span className="block md:inline">action</span>

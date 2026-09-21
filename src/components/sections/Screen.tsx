@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { alsoSeenIn, posters } from "@/lib/content";
 import { publicImage } from "@/lib/image";
 import { site } from "@/lib/site";
@@ -78,15 +79,23 @@ export function Screen() {
             <span className="font-semibold text-ink">Also seen in:</span>{" "}
             {alsoSeenIn.join(", ")}.
           </p>
-          <a
-            href={site.imdb}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-crimson underline decoration-2 underline-offset-4 hover:text-oxblood"
-          >
-            Full filmography on IMDb
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              href="/filmography"
+              className="font-semibold text-crimson underline decoration-2 underline-offset-4 hover:text-oxblood"
+            >
+              Full Alan Ritchson filmography
+            </Link>
+            <a
+              href={site.imdb}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-crimson underline decoration-2 underline-offset-4 hover:text-oxblood"
+            >
+              Full filmography on IMDb
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

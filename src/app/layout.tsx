@@ -5,25 +5,32 @@ import "@fontsource-variable/newsreader/wght-italic.css";
 import "./globals.css";
 import { site } from "@/lib/site";
 
+const title = `${site.name} Fan Club | Official News, Reacher & VIP Membership`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} Fan Club | News, Store & VIP Membership`,
-    template: `%s | ${site.clubName}`,
-  },
+  title: { default: title, template: `%s | ${site.clubName}` },
   description: site.description,
   applicationName: site.clubName,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: site.clubName,
-    title: `${site.name} Fan Club | News, Store & VIP Membership`,
+    title,
     description: site.description,
-    url: site.url,
+    url: "/",
+    locale: "en_US",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} Fan Club`,
-    description: site.description,
+  twitter: { card: "summary_large_image", title, description: site.description },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  // Search Console / Bing Webmaster verification: set these env vars, no code change needed
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
   },
 };
 
