@@ -4,15 +4,16 @@ import { JsonLd } from "@/components/JsonLd";
 import { LinkButton } from "@/components/ui/Button";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { alsoSeenIn, posters } from "@/lib/content";
-import { breadcrumbLd, filmographyLd } from "@/lib/seo";
+import { breadcrumbLd, filmographyLd, pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: { absolute: "Alan Ritchson Movies & TV Shows: Where to Watch" },
+  socialTitle: "Alan Ritchson Movies & TV Shows: Where to Watch",
   description:
     "Alan Ritchson's filmography: Reacher, War Machine, Titans, Smallville and Blue Mountain State, with his roles, the years and where to watch each one.",
-  alternates: { canonical: "/filmography" },
-};
+  path: "/filmography",
+});
 
 export default function FilmographyPage() {
   return (

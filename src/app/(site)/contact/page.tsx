@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
-import { abs, breadcrumbLd } from "@/lib/seo";
+import { abs, breadcrumbLd, pageMetadata } from "@/lib/seo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
+  socialTitle: "Contact the Alan Ritchson Fan Club",
   description:
     "Contact the official Alan Ritchson fan club for fan support, press and partnership enquiries, or to report an impersonator.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

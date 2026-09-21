@@ -4,24 +4,19 @@ import "@fontsource-variable/newsreader";
 import "@fontsource-variable/newsreader/wght-italic.css";
 import "./globals.css";
 import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
 const title = `${site.name} Fan Club | Official News, Reacher & VIP Membership`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: title, template: `%s | ${site.clubName}` },
-  description: site.description,
-  applicationName: site.clubName,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: site.clubName,
-    title,
+  ...pageMetadata({
+    title: { default: title, template: `%s | ${site.clubName}` },
+    socialTitle: title,
     description: site.description,
-    url: "/",
-    locale: "en_US",
-  },
-  twitter: { card: "summary_large_image", title, description: site.description },
+    path: "/",
+  }),
+  applicationName: site.clubName,
   robots: {
     index: true,
     follow: true,

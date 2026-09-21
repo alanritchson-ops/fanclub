@@ -4,14 +4,15 @@ import { JsonLd } from "@/components/JsonLd";
 import { LinkButton } from "@/components/ui/Button";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { roots, timeline } from "@/lib/content";
-import { breadcrumbLd, personLd } from "@/lib/seo";
+import { breadcrumbLd, pageMetadata, personLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: { absolute: "Alan Ritchson Biography: Life, Career & Reacher" },
+  socialTitle: "Alan Ritchson Biography: Life, Career & Reacher",
   description:
     "Alan Ritchson's biography: born in Grand Forks, raised in Niceville, then American Idol, Smallville, Titans and the title role in Reacher. His career timeline.",
-  alternates: { canonical: "/biography" },
-};
+  path: "/biography",
+});
 
 export default function BiographyPage() {
   return (

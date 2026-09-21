@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { JoinForm } from "@/components/forms/JoinForm";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbLd } from "@/lib/seo";
+import { breadcrumbLd, pageMetadata } from "@/lib/seo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Join the VIP Club",
+  socialTitle: "Join the VIP Club | Alan Ritchson Fan Club",
   description:
     "Request lifetime VIP access to the official Alan Ritchson fan club: a numbered pass, private community, member pricing and first notice on drops.",
-  alternates: { canonical: "/join" },
-};
+  path: "/join",
+});
 
 export default function JoinPage() {
   return (

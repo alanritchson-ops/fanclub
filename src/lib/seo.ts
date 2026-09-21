@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { faqs, posters, roots } from "@/lib/content";
 import { site } from "@/lib/site";
 
@@ -79,5 +80,52 @@ export function breadcrumbLd(trail: { name: string; path: string }[]) {
       name: t.name,
       item: abs(t.path),
     })),
+  };
+}
+
+/**
+ * Link-preview image (WhatsApp, Facebook, X, iMessage, Slack...). 1200x630 and
+ * under 100 KB, because WhatsApp drops previews for images over ~300 KB.
+ * Regenerate from public/images/alan.jpg if the photo changes.
+ */
+export const socialImage = {
+  url: "/images/og-alan.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Alan Ritchson",
+};
+
+/**
+ * Complete metadata for a page, including its own link-preview card. Every
+ * page needs its own og:title / og:url: a page-level `openGraph` replaces the
+ * layout's wholesale, so nothing is inherited.
+ */
+export function pageMetadata(opts: {
+  /** <title> value; use { absolute } to skip the site-name suffix */
+  title: Metadata["title"];
+  /** The headline shown on a shared link */
+  socialTitle: string;
+  description: string;
+  path: string;
+}): Metadata {
+  return {
+    title: opts.title,
+    description: opts.description,
+    alternates: { canonical: opts.path },
+    openGraph: {
+      type: "website",
+      siteName: site.clubName,
+      locale: "en_US",
+      url: opts.path,
+      title: opts.socialTitle,
+      description: opts.description,
+      images: [socialImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: opts.socialTitle,
+      description: opts.description,
+      images: [socialImage.url],
+    },
   };
 }
