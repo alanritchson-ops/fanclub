@@ -23,13 +23,17 @@ export const metadata: Metadata = {
   category: "entertainment",
   keywords: [
     "Alan Ritchson",
+    "Alan Ritchson actor",
     "Alan Ritchson fan club",
+    "Alan Ritchson official fan club",
+    "alanritchson",
+    "Alan Ritchson movies and TV shows",
+    "Alan Ritchson biography",
     "Reacher",
     "Jack Reacher",
     "War Machine",
     "Titans",
     "Smallville",
-    "Blue Mountain State",
   ],
   formatDetection: { telephone: false, email: false, address: false },
   robots: {
