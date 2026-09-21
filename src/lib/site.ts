@@ -6,7 +6,9 @@ export const site = {
   name: "Alan Ritchson",
   clubName: "Alan Ritchson Fan Club",
   domain: "alanritchsonfanclub.com",
-  url: "https://alanritchsonfanclub.com",
+  // Must be the address the site is actually served from (Vercel redirects the bare
+  // domain to www). Canonicals, link previews and the sitemap all use this value.
+  url: "https://www.alanritchsonfanclub.com",
   description:
     "The official fan club for Alan Ritchson. Reacher, War Machine, Titans and more: news roundups, watch-alongs, member merch and a VIP membership pass.",
 
