@@ -92,7 +92,8 @@ export const socialImage = {
   url: "/images/og-alan.jpg",
   width: 1200,
   height: 630,
-  alt: "Alan Ritchson",
+  alt: "Alan Ritchson, star of Reacher",
+  type: "image/jpeg",
 };
 
 /**
@@ -125,7 +126,9 @@ export function pageMetadata(opts: {
       card: "summary_large_image",
       title: opts.socialTitle,
       description: opts.description,
-      images: [socialImage.url],
+      images: [{ url: socialImage.url, alt: socialImage.alt }],
     },
+    // Some scrapers look for the https-specific image tag explicitly
+    other: { "og:image:secure_url": abs(socialImage.url) },
   };
 }
